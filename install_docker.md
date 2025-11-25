@@ -20,3 +20,4 @@ sudo docker --version
 sudo usermod -aG docker $USER
 
 # Note: Log out and back in for group changes to take effect
+if in SSH then you need to 'exit' the session and log on again
