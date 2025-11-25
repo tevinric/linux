@@ -52,19 +52,19 @@ You may be prompted for your password (mysecretpassword).
 
 2. Once you see the mydatabase=> prompt, you are connected. Create a table:
 
-    CREATE TABLE products (
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(100),
-      price NUMERIC(10, 2)
-    );
+        CREATE TABLE products (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(100),
+          price NUMERIC(10, 2)
+        );
 
 3. Insert some data:
 
-    INSERT INTO products (name, price) VALUES ('Laptop', 999.99), ('Mouse', 25.50);
+        INSERT INTO products (name, price) VALUES ('Laptop', 999.99), ('Mouse', 25.50);
 
 4. Verify the data:
 
-    SELECT * FROM products;
+        SELECT * FROM products;
    
 6. Type \q and press Enter to exit the psql shell and return to your Linux terminal.
 
