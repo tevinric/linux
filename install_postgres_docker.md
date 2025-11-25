@@ -4,13 +4,13 @@ Ensure you have Docker installed on your Ubuntu/Linux machine.
 Open your terminal and download the official PostgreSQL image from Docker Hub.
 bash
 
-    docker pull postgres
+    docker pull postgres:16
 
 ### Step 2: Create a Docker Volume for Data Persistence
 Create a named volume to ensure your data is stored safely on the host machine and is not lost when the container stops or is removed. This volume will physically reside within the Docker managed area on your Linux server.
 bash
 
-    docker volume create pg_data
+    docker volume create pg_data_v16
 
 ##### Volume Details and Location:
 To find the exact location of this volume on your Linux filesystem, use the following command:
@@ -23,13 +23,13 @@ Look for the "Mountpoint" key in the output (e.g., /var/lib/docker/volumes/pg_da
 
 Run the container using a single command that defines the new user (myuser) and database (mydatabase) via environment variables (-e). The PostgreSQL image is designed to read these variables upon its very first boot and create these resources automatically before the service is ready to accept connections. The -v flag mounts the volume to the necessary directory within the container.
 
-    docker run -d --name my_postgres_container \
+    docker run -d --name my_postgres_container_v16 \
       -e POSTGRES_USER=myuser \
       -e POSTGRES_PASSWORD=mysecretpassword \
       -e POSTGRES_DB=mydatabase \
-      -v pg_data:/var/lib/postgresql/data \
+      -v pg_data_v16:/var/lib/postgresql/data \
       -p 5432:5432 \
-      postgres
+      postgres:16
 
 Key Explanation: The mapping -v pg_data:/var/lib/postgresql/data ensures that the database's internal data directory is written to your persistent volume on the Linux server.
 
