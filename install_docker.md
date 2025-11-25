@@ -1,23 +1,33 @@
-# Install required packages
+## Install required packages
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 
-# Add Docker's official GPG key
+## Add Docker's official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-# Add Docker repository
+## Add Docker repository
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# Update package index
+## Update package index
 sudo apt update
 
-# Install Docker
+## Install Docker
 sudo apt install -y docker-ce docker-ce-cli containerd.io
 
-# Verify Docker installation
+## Verify Docker installation
 sudo docker --version
 
-# Add your user to docker group (optional, to run docker without sudo)
+## Add your user to docker group (optional, to run docker without sudo)
 sudo usermod -aG docker $USER
 
-# Note: Log out and back in for group changes to take effect
+## Note: Log out and back in for group changes to take effect
 if in SSH then you need to 'exit' the session and log on again
+
+## Optional  Install Docker compose if needed:
+### Download Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+### Make it executable
+sudo chmod +x /usr/local/bin/docker-compose
+
+### Verify installation
+docker-compose --version
