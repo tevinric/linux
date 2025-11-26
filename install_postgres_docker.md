@@ -46,7 +46,7 @@ The user and database now exist. You can connect using the psql command-line cli
 
 1. Access the shell inside your container as the user you just created to connect to your specific database:
 
-    docker exec -it my_postgres_container psql -U myuser -d mydatabase
+        docker exec -it my_postgres_container_16 psql -U myuser -d mydatabase
 
 You may be prompted for your password (mysecretpassword).
 
