@@ -84,7 +84,7 @@ Since all data is stored in the pg_data volume, you can back it up using standar
     mkdir -p ~/db_backups
 
 ##### Use pg_dump inside the container to create an SQL dump file on your host machine
-    docker exec -t my_postgres_container pg_dump -U myuser mydatabase > ~/db_backups/mydatabase_dump_$(date +\%Y\%m\%d).sql
+    docker exec -t my_postgres_container_v16 pg_dump -U myuser mydatabase > ~/db_backups/mydatabase_dump_$(date +\%Y\%m\%d).sql
 
 This ensures all your users, databases, and tables are backed up into a single, restorable SQL file stored safely on your Linux host server.
 
