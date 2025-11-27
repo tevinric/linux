@@ -38,13 +38,13 @@ Key Explanation: The mapping -v pg_data:/var/lib/postgresql/data ensures that th
 
 ##### RUN EXISTING CONTAINER
 
-    docker run -d \
+    docker run -d my_postgres_container_v16 \
       -e POSTGRES_USER=myuser \
       -e POSTGRES_PASSWORD=mysecretpassword \
       -e POSTGRES_DB=mydatabase \
       -v pg_data_v16:/var/lib/postgresql/data \
       -p 5432:5432 \
-      my_postgres_container_v16
+      
 
 ### Step 4: Verify the Container is Running
 
