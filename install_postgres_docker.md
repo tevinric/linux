@@ -83,6 +83,16 @@ Since all data is stored in the pg_data volume, you can back it up using standar
 ##### Create a local directory for backups
     mkdir -p ~/db_backups
 
+    mkdir: This is the command name, short for "make directory". Its purpose is to create a new folder or                    directory in the file system.
+            -p: This is an option (or flag) which stands for "parents". This is a very important part of the                 command.
+
+        If the parent directories in the path do not already exist, the -p flag tells mkdir to create them as             well, without throwing an error.
+        If the directory ~/db_backups already exists, the -p flag prevents mkdir from erroring out.
+    
+    ~/db_backups: This is the path of the directory you want to create.
+    
+        The tilde (~) is a shorthand that refers to your current user's home directory (e.g., /home/username/ on          Linux/macOS).
+
 ##### Use pg_dump inside the container to create an SQL dump file on your host machine
     docker exec -t my_postgres_container_v16 pg_dump -U myuser mydatabase > ~/db_backups/mydatabase_dump_$(date +\%Y\%m\%d).sql
 
