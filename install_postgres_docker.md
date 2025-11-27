@@ -36,15 +36,9 @@ Run the container using a single command that defines the new user (myuser) and 
 Key Explanation: The mapping -v pg_data:/var/lib/postgresql/data ensures that the database's internal data directory is written to your persistent volume on the Linux server.
 
 
-##### RUN EXISTING CONTAINER
+##### START EXISTING CONTAINER
 
-    docker run -d my_postgres_container_v16 \
-      -e POSTGRES_USER=myuser \
-      -e POSTGRES_PASSWORD=mysecretpassword \
-      -e POSTGRES_DB=mydatabase \
-      -v pg_data_v16:/var/lib/postgresql/data \
-      -p 5432:5432 \
-      
+    docker start my_postgres_container_v16 
 
 ### Step 4: Verify the Container is Running
 
