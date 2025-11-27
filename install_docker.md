@@ -23,6 +23,99 @@ docker volume inspect pg_data_v16
 ```
 - **docker volume inspect pg_data_v16**: Inspects the details of your volume, including its location (`Mountpoint`) on disk.
 
+[...]
+
+---
+
+## Step 2.1: Locating and Accessing Your Docker Volume
+
+After you create your volume (Step 2), you may want to know where on your host system Docker stores it.
+
+**Find the volume location:**
+```bash
+docker volume inspect pg_data_v16
+```
+Look for the `"Mountpoint"` value in the output, which shows the full path to the volume on your local filesystem.  
+Example output:
+```json
+[
+    {
+        "Name": "pg_data_v16",
+        [...]
+        "Mountpoint": "/var/lib/docker/volumes/pg_data_v16/_data",
+        [...]
+    }
+]
+```
+- **Mountpoint**: This is the directory on your host that contains all database files for your container.
+
+### Step 2.2: Accessing the Volume and Replacing the Database File with a Backup
+
+If your main database file (within the volume) gets corrupted and you need to restore from a backup, follow these steps.
+
+#### 1. **Stop the PostgreSQL Docker container**
+Before accessing or replacing files, **stop the container to avoid data corruption**:
+```bash
+docker stop my_postgres_container_v16
+```
+
+#### 2. **Go to the volume mount directory**
+```bash
+cd /var/lib/docker/volumes/pg_data_v16/_data
+```
+> *Replace this path with your actual "Mountpoint" if it's different.*
+
+#### 3. **Find the database file**
+For PostgreSQL, all your data is in the files inside this directory—most importantly the `base` and other subfolders.  
+If you’re restoring from a backup taken via `pg_dump`, you’ll need to **import that SQL file into a fresh database** (see notes below).  
+If you’re copying over a physical backup (such as a copy of the `_data` folder), you can **replace the entire contents** of this directory.
+
+**Example: Replace all volume data with a backup (physical backup):**
+```bash
+# From your backup location, copy all data to the volume mountpoint
+sudo cp -r /path/to/backup_data/* /var/lib/docker/volumes/pg_data_v16/_data/
+```
+- Use `sudo` if you have permission issues.
+
+**NOTE:**  
+- For backups created with `pg_dump` or SQL files, don't directly replace files!  
+- Instead, start the container and use `psql` to restore:
+    ```bash
+    docker start my_postgres_container_v16
+    docker exec -i my_postgres_container_v16 psql -U myuser -d mydatabase < ~/db_backups/mydatabase_dump_YYYYMMDD.sql
+    ```
+- Only replace volume files if you have an exact, compatible copy of the entire `_data` directory.
+
+#### 4. **Start the container**
+Once the volume's data is restored/replaced:
+```bash
+docker start my_postgres_container_v16
+```
+
+#### 5. **Verify the data**
+Connect to your database and check that everything is restored:
+```bash
+docker exec -it my_postgres_container_v16 psql -U myuser -d mydatabase
+```
+Use SQL queries to verify table contents.
+
+---
+
+**Summary — Restoring from Physical Backup:**
+1. Stop the database container.
+2. Replace the data at the volume mountpoint with backup files.
+3. Start the container.
+4. Confirm restoration by connecting to the database.
+
+**Summary — Restoring from pg_dump (.sql) File:**
+1. Start the database container.
+2. Import the backup with `psql`.
+3. Confirm restoration.
+
+**Tip:**  
+It's generally safer to restore using SQL dumps (`pg_dump`). Directly replacing PG data files is advanced and requires version and configuration compatibility.
+
+
 ### Step 3: Run the PostgreSQL Container and Initialize the Database/User
 Run the container using a single command that defines the new user (`myuser`) and database (`mydatabase`) via environment variables. The image configures these on startup.
 
