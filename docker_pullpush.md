@@ -1,7 +1,6 @@
+# Guide: Pushing and Pulling Docker Images with Public and Private Docker Hub Repositories
 
-# Guide: Pushing a Local Docker Image to Public and Private Docker Hub Repositories
-
-This guide will walk you through the process of pushing a local Docker image to both public and private repositories on Docker Hub using the terminal.
+This guide will walk you through the process of building, pushing, and pulling local Docker images to and from public and private repositories on Docker Hub using the terminal. It also explains how to add multiple images to the same repository.
 
 ---
 
@@ -77,34 +76,99 @@ docker push yourdockerhubusername/my-private-repo:latest
 
 ---
 
-### Example Workflow
+## 5. Pulling Images from Docker Hub
 
-Let’s say your Docker Hub username is `janedoe`, and you want to push to:
-- `janedoe/demo-public` (public)
-- `janedoe/demo-private` (private)
+You can pull any image that exists in a Docker Hub repository to your local machine.
 
-**Tagging:**
+**Public Repository:**
+
 ```bash
-docker tag my-image:latest janedoe/demo-public:latest
-docker tag my-image:latest janedoe/demo-private:latest
+docker pull yourdockerhubusername/my-public-repo:latest
 ```
 
-**Pushing:**
+**Private Repository:**
+
 ```bash
-docker push janedoe/demo-public:latest
-docker push janedoe/demo-private:latest
+docker pull yourdockerhubusername/my-private-repo:latest
+```
+
+- For private repositories, make sure you are logged in (`docker login`).
+
+**Example:**
+
+```bash
+docker pull janedoe/demo-public:latest
+docker pull janedoe/demo-private:latest
 ```
 
 ---
 
-## 5. Verify Your Images on Docker Hub
+## 6. Adding Multiple Images to the Same Repository (Using Tags)
 
-- Go to [https://hub.docker.com/repositories](https://hub.docker.com/repositories)
-- Check if your image appears under your selected repository.
+A single repository on Docker Hub can store multiple images by using different tags. This is useful for versioning or differentiating builds.
+
+**Example: You have two images to push to the same private repo**
+
+1. **Build both images:**
+    ```bash
+    docker build -t my-app:dev .
+    docker build -t my-app:prod .
+    ```
+
+2. **Tag each image with a unique tag under the same repository:**
+    ```bash
+    docker tag my-app:dev yourdockerhubusername/my-private-repo:dev
+    docker tag my-app:prod yourdockerhubusername/my-private-repo:prod
+    ```
+
+3. **Push both images:**
+    ```bash
+    docker push yourdockerhubusername/my-private-repo:dev
+    docker push yourdockerhubusername/my-private-repo:prod
+    ```
+
+**You can use as many tags as you want for different versions or purposes:**
+
+- `yourdockerhubusername/my-private-repo:v1`
+- `yourdockerhubusername/my-private-repo:v2`
+- `yourdockerhubusername/my-private-repo:experiment`
+
+**To pull a specific tag:**
+```bash
+docker pull yourdockerhubusername/my-private-repo:dev
+docker pull yourdockerhubusername/my-private-repo:prod
+```
 
 ---
 
-## Troubleshooting Tips
+### Full Example Workflow
+
+Let’s say your Docker Hub username is `janedoe`, and you want to push two images (`site` and `api`) to the same private repo (`janedoe/demo-private`):
+
+```bash
+# Build your images
+docker build -t site:latest ./site
+docker build -t api:latest ./api
+
+# Tag for private repo with unique tags
+docker tag site:latest janedoe/demo-private:site
+docker tag api:latest janedoe/demo-private:api
+
+# Push both images to the same repo under different tags
+docker push janedoe/demo-private:site
+docker push janedoe/demo-private:api
+```
+
+**To pull them:**
+
+```bash
+docker pull janedoe/demo-private:site
+docker pull janedoe/demo-private:api
+```
+
+---
+
+## Additional Troubleshooting Tips
 
 - **Permission Denied:** Make sure you are logged in via `docker login` and have access to the repository.
 - **Image Not Showing:** Double-check tags and ensure you've pushed to the correct repository.
@@ -115,8 +179,9 @@ docker push janedoe/demo-private:latest
 ## Summary of Commands
 
 ```bash
-# Build
+# Build images
 docker build -t my-image:latest .
+docker build -t another-image:latest ./another
 
 # Login
 docker login
@@ -124,14 +189,21 @@ docker login
 # Tag for public repo
 docker tag my-image:latest yourdockerhubusername/my-public-repo:latest
 
-# Tag for private repo
-docker tag my-image:latest yourdockerhubusername/my-private-repo:latest
+# Tag multiple for private repo with different tags
+docker tag my-image:latest yourdockerhubusername/my-private-repo:app1
+docker tag another-image:latest yourdockerhubusername/my-private-repo:app2
 
 # Push to public repo
 docker push yourdockerhubusername/my-public-repo:latest
 
-# Push to private repo
-docker push yourdockerhubusername/my-private-repo:latest
+# Push to private repo (multiple tags)
+docker push yourdockerhubusername/my-private-repo:app1
+docker push yourdockerhubusername/my-private-repo:app2
+
+# Pull from Docker Hub
+docker pull yourdockerhubusername/my-public-repo:latest
+docker pull yourdockerhubusername/my-private-repo:app1
+docker pull yourdockerhubusername/my-private-repo:app2
 ```
 
 ---
@@ -139,4 +211,6 @@ docker push yourdockerhubusername/my-private-repo:latest
 ## Additional Resources
 
 - [Docker Push Docs](https://docs.docker.com/engine/reference/commandline/push/)
+- [Docker Pull Docs](https://docs.docker.com/engine/reference/commandline/pull/)
 - [Repository Privacy Settings](https://docs.docker.com/docker-hub/repos/#private-repositories)
+- [Docker Tagging Best Practices](https://docs.docker.com/engine/reference/commandline/tag/)
