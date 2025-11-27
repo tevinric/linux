@@ -23,9 +23,6 @@ docker volume inspect pg_data_v16
 ```
 - **docker volume inspect pg_data_v16**: Inspects the details of your volume, including its location (`Mountpoint`) on disk.
 
-[...]
-
----
 
 ## Step 2.1: Locating and Accessing Your Docker Volume
 
