@@ -171,3 +171,5 @@ Add this line at the end:
 - Your cron job manages everything automatically.
 
 **Note:** Cron jobs run as your user, so ensure your user can run Docker and access the backup directory.
+
+** Save the crontab file using CNTRL+X
