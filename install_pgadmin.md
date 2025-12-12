@@ -48,17 +48,31 @@ During this script, you will be prompted to provide an email address and passwor
 
 ### Access and Configuration
 
-Access the web interface: Open your web browser and navigate to http://YOUR_SERVER_IP_ADDRESS/pgadmin4. \n\n
+Access the web interface: Open your web browser and navigate to http://YOUR_SERVER_IP_ADDRESS/pgadmin4.
 
-Log in: Enter the email address and password you created during the setup script. \n
-Connect to your PostgreSQL server: \n
-        In the pgAdmin dashboard, click Add New Server.
-        In the General tab, enter a name for your server (e.g., "My Local Server").
-        Go to the Connection tab.
-        For Host name/address, enter localhost (or the remote IP/hostname of your PostgreSQL server).
-        The Port is typically 5432 by default.
-        Enter the Username (commonly postgres) and the corresponding Password you set for your PostgreSQL user.
-        Click Save. 
+Log in: Enter the email address and password you created during the setup script.
+
+Connect to your PostgreSQL server: 
+    
+    1. In the pgAdmin dashboard, click Add New Server.
+    2. In the General tab, enter a name for your server (e.g., "My Local Server").
+    3. Go to the Connection tab.
+    4. For Host name/address, enter localhost (or the remote IP/hostname of your PostgreSQL server).
+    5. The Port is typically 5432 by default.
+    6. Enter the Username (commonly postgres) and the corresponding Password you set for your PostgreSQL user.
+    7. Click Save. 
 
 You can now manage your PostgreSQL databases using the pgAdmin web interface. 
+
+
+Please NOTE that you cannot have any other applications being served to server main domain before you start the webscript setup as this will prevent the Apache server from starting up. 
+
+
+### ONCE DONE WITH PGADMIN CHANGES:
+
+- You must shitdown the apache server so that you can run the main application on port 80
+
+```
+sudo apachectl stop
+```
 
