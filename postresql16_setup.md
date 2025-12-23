@@ -10,13 +10,13 @@ Run the container using the docker run command with the required environment var
 
     docker run --name some-postgres -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydatabase -p 5432:5432 -d postgres:16
 
---name some-postgres: Assigns a name to your container for easy reference.
--e POSTGRES_USER=myuser: Sets the desired username. This user will have superuser privileges.
--e POSTGRES_PASSWORD=mypassword: Sets the password for the specified user. This variable is required.
--e POSTGRES_DB=mydatabase: Creates a new database with this name and grants access to the specified user.
--p 5432:5432: Maps the container's PostgreSQL port (5432) to the same port on your host machine.
--d: Runs the container in detached mode (in the background).
-postgres:16: Specifies the image name and tag to use. 
+    --name some-postgres: Assigns a name to your container for easy reference.
+    -e POSTGRES_USER=myuser: Sets the desired username. This user will have superuser privileges.
+    -e POSTGRES_PASSWORD=mypassword: Sets the password for the specified user. This variable is required.
+    -e POSTGRES_DB=mydatabase: Creates a new database with this name and grants access to the specified user.
+    -p 5432:5432: Maps the container's PostgreSQL port (5432) to the same port on your host machine.
+    -d: Runs the container in detached mode (in the background).
+    postgres:16: Specifies the image name and tag to use. 
 
 # 3. Verify the container is running
 
