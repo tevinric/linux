@@ -15,7 +15,7 @@ bash
 ##### Volume Details and Location:
 To find the exact location of this volume on your Linux filesystem, use the following command:
 
-    docker volume inspect pg_data
+    docker volume inspect pg_data_v16
 
 Look for the "Mountpoint" key in the output (e.g., /var/lib/docker/volumes/pg_data/_data). This directory on your Linux server stores all database files, including user definitions, database schemas, and all inserted data.
 
