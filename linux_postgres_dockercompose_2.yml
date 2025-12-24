@@ -1,0 +1,21 @@
+# This is a docker compose for running postgres only through docker compose
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres16
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    external: true
